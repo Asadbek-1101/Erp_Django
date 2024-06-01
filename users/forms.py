@@ -27,3 +27,34 @@ class RegisterForm(forms.ModelForm):
         if password != confirm_password:
             raise forms.ValidationError("Passwords do not match")
         return password
+
+
+class ProfileEditForm(forms.ModelForm):
+    username = forms.CharField(widget=forms.TextInput({"class": "form-control"}))
+    first_name = forms.CharField(widget=forms.TextInput({"class": "form-control"}))
+    last_name = forms.CharField(widget=forms.TextInput({"class": "form-control"}))
+    email = forms.EmailField(widget=forms.EmailInput({"class": "form-control"}))
+    address = forms.CharField(widget=forms.TextInput({"class": "form-control"}))
+    phone_number = forms.CharField(widget=forms.TextInput({"class": "form-control"}))
+    image = forms.ImageField(widget=forms.FileInput({"class": "form-control"}))
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'address', 'phone_number', 'image')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

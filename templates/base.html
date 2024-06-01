@@ -11,6 +11,22 @@
     <title>Hello, world!</title>
   </head>
   <body>
+
+    <div class="container py-5">
+    <div class="row">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-body-tertiary rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'users:login' %}">Log in</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:register' %}">Register</a></li>
+
+            {% if user.is_authenticated %}
+            <li class="breadcrumb-item"><a href="{% url 'users:profile' %}">User profile</a></li>
+            {% endif %}
+          </ol>
+        </nav>
+      </div>
+    </div>
   {% block content %}
 
   {% endblock content %}
