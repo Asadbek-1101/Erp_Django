@@ -12,13 +12,13 @@ class RegisterForm(forms.ModelForm):
     phone_number = forms.CharField(widget=forms.TextInput({"class": "form-control", "placeholder": "Phone Number"}))
     first_name = forms.CharField(widget=forms.TextInput({"class": "form-control", "placeholder": "First Name"}))
     last_name = forms.CharField(widget=forms.TextInput({"class": "form-control", "placeholder": "Last Name"}))
-
     password = forms.CharField(widget=forms.PasswordInput({"class": "form-control", "placeholder": "Password"}))
     confirm_password = forms.CharField(widget=forms.PasswordInput({"class": "form-control", "placeholder": "Confirm Password"}))
+    user_role = forms.Select(attrs={'class': "form-control"})
 
     class Meta:
         model = User
-        fields = ('username', 'phone_number', 'first_name', 'last_name', 'password', 'confirm_password')
+        fields = ('username', 'phone_number', 'first_name', 'last_name', 'password', 'confirm_password', 'user_role')
 
     def clean_confirm_password(self):
         password = self.cleaned_data['password']

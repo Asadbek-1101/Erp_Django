@@ -1,8 +1,10 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import LoginForm, RegisterForm, ProfileEditForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .permissions import AdminRequiredMixin
+from .models import Student, Team
 
 
 class LoginView(View):
@@ -25,7 +27,7 @@ class LoginView(View):
         return render(request, 'users/login.html', {'form': form})
 
 
-class RegisterView(View):
+class RegisterView(AdminRequiredMixin, View):
 
     def get(self, request):
         form = RegisterForm()
@@ -39,10 +41,14 @@ class RegisterView(View):
             user.set_password(password)
             user.save()
 
-            return redirect('/')
+            if user.user_role == 'student':
+                new_student = Student()
+                new_student.user = user
+                new_student.save()
 
-        form = RegisterForm()
+            return redirect('/')
         return render(request, 'users/register.html', {'form': form})
+
 
 class ProfileView(LoginRequiredMixin, View):
     def get(self, request):
@@ -61,3 +67,25 @@ class EditProfileView(LoginRequiredMixin,View):
 
         form = ProfileEditForm(instance=request.user)
         return render(request, 'users/edit_profile.html', {'form': form})
+
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('/')
+
+class GroupsView(View):
+    def get(self, request):
+        teams = Team.objects.all()
+        return render(request, 'users/groups.html', {'teams':teams})
+
+
+
+
+
+
+
+
+
+
+
