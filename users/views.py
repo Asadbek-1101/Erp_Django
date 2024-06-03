@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from .forms import LoginForm, RegisterForm, ProfileEditForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -78,6 +78,11 @@ class GroupsView(View):
     def get(self, request):
         teams = Team.objects.all()
         return render(request, 'users/groups.html', {'teams':teams})
+
+def team_students(request, team_id):
+    team = get_object_or_404(Team, pk=team_id)
+    students = team.students.all()
+    return render(request, 'team_students.html', {'team': team, 'students': students})
 
 
 
