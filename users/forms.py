@@ -1,5 +1,5 @@
 from django import forms
-from .models import User
+from .models import User, Student
 
 
 class LoginForm(forms.Form):
@@ -40,6 +40,13 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'address', 'phone_number', 'image')
+
+
+class StudentEditForm(forms.ModelForm):
+    date_of_birth = forms.DateField(widget=forms.DateInput({"class": "form-control"}))
+    class Meta:
+        model = Student
+        fields = ('date_of_birth', 'team')
 
 
 

@@ -1,10 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from .forms import LoginForm, RegisterForm, ProfileEditForm
+from .forms import LoginForm, RegisterForm, ProfileEditForm, StudentEditForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .permissions import AdminRequiredMixin
-from .models import Student, Team
+from .models import Student, Team, User
+from django.db.models import Q
 
 
 class LoginView(View):
@@ -79,10 +80,46 @@ class GroupsView(View):
         teams = Team.objects.all()
         return render(request, 'users/groups.html', {'teams':teams})
 
-def team_students(request, team_id):
-    team = get_object_or_404(Team, pk=team_id)
-    students = team.students.all()
-    return render(request, 'team_students.html', {'team': team, 'students': students})
+class StudentsListView(AdminRequiredMixin,View):
+    def get(self, request):
+        if request.GET != {}:
+            students = Student.objects.filter(Q(user__username__contains = request.GET['search']) | Q(team__name__contains = request.GET['search'])
+                                              | Q(user__first_name__contains = request.GET['search']) | Q(user__last_name__contains = request.GET['search']))
+        else:
+            students = Student.objects.all()
+        return render(request, 'users/students.html', {'students':students})
+
+class StudentByTeamView(AdminRequiredMixin,View):
+    def get(self, request, id):
+        team = get_object_or_404(Team, id=id)
+        students = team.students.all()
+        return render(request, 'users/students.html', {'students': students})
+
+
+class EditStudentView(AdminRequiredMixin,View):
+    def get(self, request, id):
+        student = get_object_or_404(Student, id=id)
+        form = StudentEditForm(instance=student)
+        return render(request, 'users/edit_student.html', {'form': form})
+
+    def post(self, request, id):
+        student = get_object_or_404(Student, id=id)
+        form = StudentEditForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect('users:students')
+        form = StudentEditForm(instance=student)
+        return render(request, 'users/edit_student.html', {'form': form})
+
+
+class DeleteStudentView(AdminRequiredMixin,View):
+    def get(self, request, id):
+        student = get_object_or_404(Student, id=id)
+        user = User.objects.get(username=student.user.username)
+        student.delete()
+        user.delete()
+        return redirect('users:students')
+
 
 
 
