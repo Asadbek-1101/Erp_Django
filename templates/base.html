@@ -41,6 +41,10 @@
                 <li class="breadcrumb-item"><a href="{% url 'users:groups' %}">Groups</a></li>
                 <li class="breadcrumb-item"><a href="{% url 'users:students' %}">Students</a></li>
               {% endif %}
+
+              {% if user.user_role == 'student' %}
+                <li class="breadcrumb-item"><a href="{% url 'students:dashboard' %}">Dashboard</a></li>
+              {% endif %}
             {% else %}
               <li class="breadcrumb-item"><a href="{% url 'users:login' %}">Log in</a></li>
             {% endif %}
