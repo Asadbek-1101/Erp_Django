@@ -19,5 +19,5 @@ urlpatterns = [
     path('edit-student/<int:id>/', EditStudentView.as_view(), name='edit_student'),
     path('delete-student/<int:id>/', DeleteStudentView.as_view(), name='delete_student'),
 
-    path('reset-password/', ResetPasswordView.as_view(), name='reset_password'),
+    path('reset-password/+', ResetPasswordView.as_view(), name='reset_password'),
 ]
