@@ -34,4 +34,26 @@ class Student(models.Model):
         return f"{self.user}"
 
 
+class StudentHomework(models.Model):
+    UYGA_VAZIFA_HOLATI = (
+        ('qabul', 'Qabul qilingan'),
+        ('bajarilmagan', 'Bajarilmagan'),
+        ('berilmagan', 'Berilmagan'),
+        ('kutilayotganlar', 'Kutilayotganlar'),
+    )
+
+    mavzu = models.CharField(max_length=200)
+    video = models.IntegerField()
+    vazifa = models.CharField(max_length=20, choices=UYGA_VAZIFA_HOLATI, default='Berilmagan')
+    date_end = models.DateTimeField(blank=True, null=True)
+    date_lesson = models.DateField(blank=True, null=True)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True, blank=True)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, blank=True)
+
+
+    def __str__(self):
+        return f"{self.mavzu}"
+
+
+
 
