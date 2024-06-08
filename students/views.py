@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from users.permissions import StudentRequiredMixin
 from django.views import View
-from users.models import Student, StudentHomework
+from users.models import Student, Team
+from .forms import HomeworkFrom
+from .models import Lesson, Homework
 
 class StudentDashboardView(StudentRequiredMixin, View):
     def get(self, request):
@@ -13,10 +15,37 @@ class StudentGroupView(StudentRequiredMixin, View):
         return render(request, 'students/guruhlarim.html', {'student': student})
 
 
-class StudentHomeworkView(StudentRequiredMixin, View):
-    def get(self,request):
-        homeworks = StudentHomework.objects.all()
-        return render(request, 'students/homework.html', {'homeworks': homeworks})
+class StudentLessonView(StudentRequiredMixin, View):
+    def get(self, request, group_id):
+        team = get_object_or_404(Team, id=group_id)
+        lessons = team.lessons.all()
+        return render(request, 'students/lessons.html', {'lessons': lessons})
+
+
+class HomeworkView(StudentRequiredMixin, View):
+    def get(self, request, lesson_id):
+        form = HomeworkFrom()
+        return render(request, 'students/homework.html', {'form':form})
+
+    def post(self, request, lesson_id):
+        lesson = get_object_or_404(Lesson, id=lesson_id)
+        student = get_object_or_404(Student, user=request.user)
+
+        form = HomeworkFrom(request.POST, request.FILES)
+        if form.is_valid():
+            homework = Homework()
+            homework.student = student
+            homework.lesson = lesson
+            homework.description = form.cleaned_data['description']
+            homework.homework_file = form.cleaned_data['homework_file']
+            homework.save()
+
+            lesson.homework_status = True
+            lesson.save()
+
+            return redirect('dashboard')
+
+
 
 
 

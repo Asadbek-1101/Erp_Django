@@ -2,26 +2,15 @@
 
 
 {% block content %}
-<table class="table caption-top">
-  <caption>
-    Uyga vazifa statusi
-  </caption>
-  <thead>
-    <tr>
-      <th scope="col">Mavzu</th>
-      <th scope="col">Video</th>
-      <th scope="col">Uyga vazifa holati</th>
-      <th scope="col">Vazifa tugash vaqti</th>
-      <th scope="col">Dars vaqti</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-  </tbody>
-</table>
+<div class="container">
+    <h1>Homework page</h1>
+
+<form  method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+    <button type="submit" class="btn btn-outline-info">Upload</button>
+</form>
+</div>
 {% endblock content %}
