@@ -43,7 +43,14 @@ class HomeworkView(StudentRequiredMixin, View):
             lesson.homework_status = True
             lesson.save()
 
-            return redirect('dashboard')
+            return redirect('students/dashboard')
+
+
+
+
+
+
+
 
 
 

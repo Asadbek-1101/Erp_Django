@@ -18,7 +18,7 @@ class Lesson(models.Model):
 class Homework(models.Model):
     lesson = models.OneToOneField(Lesson, on_delete=models.CASCADE, related_name='homework')
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='students')
-    dascritption = models.TextField()
+    dascription = models.TextField()
     homework_file = models.FileField(upload_to='homeworks/', blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
 
@@ -28,3 +28,5 @@ class Homework(models.Model):
 
     def __str__(self):
         return f"{self.student.user.first_name} -- {self.lesson.title}"
+
+

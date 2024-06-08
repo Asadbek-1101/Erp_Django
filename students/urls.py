@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import StudentDashboardView, StudentGroupView, StudentLessonView, HomeworkView
 
+
 app_name = 'students'
 
 urlpatterns = [
