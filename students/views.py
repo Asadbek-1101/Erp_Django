@@ -7,7 +7,7 @@ from .models import Lesson, Homework
 
 class StudentDashboardView(StudentRequiredMixin, View):
     def get(self, request):
-        return render(request, 'students/dashboard.html')
+        return render(request, 'students/teacher_dashboard.html')
 
 class StudentGroupView(StudentRequiredMixin, View):
     def get(self,request):
