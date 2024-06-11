@@ -1,5 +1,6 @@
 from django import forms
-from .models import User, Student
+from .models import Student, Teacher, User
+
 
 
 class LoginForm(forms.Form):
@@ -48,6 +49,12 @@ class StudentEditForm(forms.ModelForm):
         model = Student
         fields = ('date_of_birth', 'team')
 
+
+class TeacherEditForm(forms.ModelForm):
+
+    class Meta:
+        model = Teacher
+        fields = ('user',)
 
 class ResetPasswordForm(forms.Form):
     old_password = forms.CharField(widget=forms.PasswordInput({"class": "form-control", 'placeholder': 'Old Password'}))

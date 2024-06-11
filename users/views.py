@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from .forms import LoginForm, RegisterForm, ProfileEditForm, StudentEditForm, ResetPasswordForm
+from .forms import LoginForm, RegisterForm, ProfileEditForm, StudentEditForm, ResetPasswordForm, TeacherEditForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .permissions import AdminRequiredMixin
 from .models import Student, Team, User, Teacher
@@ -115,6 +115,22 @@ class EditStudentView(AdminRequiredMixin,View):
             return redirect('users:students')
         form = StudentEditForm(instance=student)
         return render(request, 'users/edit_student.html', {'form': form})
+
+class EditTeacherView(AdminRequiredMixin, View):
+    def get(self, request, id):
+        teacher = Teacher.objects.filter(id=id).first()
+        form = TeacherEditForm(instance=teacher)
+        return render(request, 'users/edit_teacher.html', {'form': form})
+
+
+    def post(self, request, id):
+        teacher = get_object_or_404(Teacher, id=id)
+        form = TeacherEditForm(request.POST, instance=teacher)
+        if form.is_valid():
+            form.save()
+            return redirect('users:students')
+        return render(request, 'users/edit_teacher.html', {'form': form})
+
 
 
 class DeleteStudentView(AdminRequiredMixin,View):
