@@ -4,7 +4,7 @@ from django.views import View
 from .forms import LoginForm, RegisterForm, ProfileEditForm, StudentEditForm, ResetPasswordForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .permissions import AdminRequiredMixin
-from .models import Student, Team, User
+from .models import Student, Team, User, Teacher
 from django.db.models import Q
 
 
@@ -46,6 +46,11 @@ class RegisterView(AdminRequiredMixin, View):
                 new_student = Student()
                 new_student.user = user
                 new_student.save()
+
+            elif user.user_role == 'teacher':
+                new_teacher = Teacher()
+                new_teacher.user = user
+                new_teacher.save()
 
             return redirect('/')
         return render(request, 'users/register.html', {'form': form})

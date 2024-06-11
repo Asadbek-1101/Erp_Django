@@ -1,0 +1,23 @@
+{% extends 'students/dashboard.html' %}
+
+
+{% block content %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"><b>Title</b></th>
+      <th scope="col"><b>Date</b></th>
+      <th scope="col"><b>Status</b></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for team in teams %}
+    <tr class="table-warning">
+      <th scope="row"><a href="#">{{team.name}}</a></th>
+      <td>{{team.date_created}}</td>
+      <td>active</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}

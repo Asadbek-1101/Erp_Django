@@ -5,17 +5,16 @@
 <table class="table">
   <thead>
     <tr>
-      <th scope="col"><b>ID</b></th>
       <th scope="col"><b>Name</b></th>
       <th scope="col"><b>Status</b></th>
     </tr>
   </thead>
   <tbody>
-    <tr class="table-warning">
-      <th scope="row">{{student.team.id}}</th>
-      <td><a href="{% url 'students:lesson' student.team.id %}">{{student.team.name}}</a></td>
-      <td>active</td>
-    </tr>
+<tr class="table-warning">
+  <td><a href="{% url 'students:lesson' student.team.id %}">{{ student.team.name }}</a></td>
+  <td>active</td>
+</tr>
+
   </tbody>
 </table>
 {% endblock content %}

@@ -32,19 +32,30 @@
   <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
     <div class="position-sticky">
       <div class="list-group list-group-flush mx-3 mt-4">
-        <a
+        {% if user.user_role == 'teacher' %}
+                  <a
+          href="{% url 'teachers:dashboard' %}"
+          class="list-group-item list-group-item-action py-2 ripple"
+          aria-current="true"
+        >
+        {% else %}
+                    <a
           href="{% url 'students:dashboard' %}"
           class="list-group-item list-group-item-action py-2 ripple"
           aria-current="true"
         >
+        {% endif %}
           <i class="fas fa-tachometer-alt fa-fw me-3 active"></i><span>Bosh sahifa</span>
         </a>
         <a href="#" class="list-group-item list-group-item-action py-2 ripple">
           <i class="fas fa-chart-area fa-fw me-3"></i><span>To'lovlarim</span>
-        </a>
+        {% if user.user_role == 'teacher' %}
+        <a href="{% url 'teachers:guruhlarim' %}" class="list-group-item list-group-item-action py-2 ripple"
+          ><i class="fas fa-lock fa-fw me-3"></i><span>Guruhlarim</span></a>
+          {% else %}
         <a href="{% url 'students:guruhlarim' %}" class="list-group-item list-group-item-action py-2 ripple"
-          ><i class="fas fa-lock fa-fw me-3"></i><span>Guruhlarim</span></a
-        >
+          ><i class="fas fa-lock fa-fw me-3"></i><span>Guruhlarim</span></a>
+          {% endif %}
 <!--        <a href="#" class="list-group-item list-group-item-action py-2 ripple"-->
 <!--          ><i class="fas fa-chart-line fa-fw me-3"></i><span>Analytics</span></a-->
 <!--        >-->

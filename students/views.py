@@ -7,7 +7,7 @@ from .models import Lesson, Homework
 
 class StudentDashboardView(StudentRequiredMixin, View):
     def get(self, request):
-        return render(request, 'students/teacher_dashboard.html')
+        return render(request, 'students/dashboard.html')
 
 class StudentGroupView(StudentRequiredMixin, View):
     def get(self,request):
@@ -47,7 +47,12 @@ class HomeworkView(StudentRequiredMixin, View):
 
 
 
-
+class HomeworkDetailView(StudentRequiredMixin, View):
+    def get(self, request, lesson_id):
+        student = get_object_or_404(Student, user=request.user)
+        lesson = get_object_or_404(Lesson, id=lesson_id)
+        homework = Homework.objects.filter(lesson=lesson, student=student).first()
+        return render(request, 'students/homework_detail.html', {'homework': homework})
 
 
 
