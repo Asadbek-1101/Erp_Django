@@ -35,6 +35,7 @@ class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     date_of_birth = models.DateField(blank=True, null=True)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='students', null=True, blank=True)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='students',  null=True, blank=True)
     image = models.ImageField(blank=True, null=True, default=None)
 
     def __str__(self):

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Student, Teacher, User
+from .models import Student, Teacher, User, Team
 
 
 
@@ -47,14 +47,14 @@ class StudentEditForm(forms.ModelForm):
     date_of_birth = forms.DateField(widget=forms.DateInput({"class": "form-control"}))
     class Meta:
         model = Student
-        fields = ('date_of_birth', 'team')
+        fields = ('date_of_birth', 'team', 'teacher')
 
 
-class TeacherEditForm(forms.ModelForm):
+class GroupsEditForm(forms.ModelForm):
 
     class Meta:
-        model = Teacher
-        fields = ('user',)
+        model = Team
+        fields = ('name', 'teacher')
 
 class ResetPasswordForm(forms.Form):
     old_password = forms.CharField(widget=forms.PasswordInput({"class": "form-control", 'placeholder': 'Old Password'}))

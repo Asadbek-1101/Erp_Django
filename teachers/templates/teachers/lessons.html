@@ -1,0 +1,36 @@
+{% extends 'students/dashboard.html' %}
+
+
+{% block content %}
+
+    <div class="container py-5">
+    <div class="row">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-body-tertiary rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="">Guruhlar</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'teachers:students'  %}">Yo'qlamalar</a></li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+{% block lesson %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"><b>Name</b></th>
+      <th scope="col"><b>Date</b></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for lesson in lessons %}
+    <tr class="table-warning">
+      <th scope="row">{{lesson.title}}</th>
+      <td>{{ lesson.date }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock lesson %}
+{% endblock content %}
