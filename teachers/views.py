@@ -18,17 +18,32 @@ class TeacherTeamsView(TeacherRequiredMixin, View):
 
 
 
-class TeacherLessonView(TeacherRequiredMixin, View):
-    def get(self, request, group_id):
-        team = get_object_or_404(Team, id=group_id)
+class TeacherGruopView(TeacherRequiredMixin, View):
+    def get(self, request, team_id):
+        team = get_object_or_404(Team, id=team_id)
         lessons = team.lessons.all()
-        return render(request, 'teachers/lessons.html', {'lessons': lessons})
+        return render(request, 'teachers/guruh.html', {'lessons': lessons})
 
-class TeacherStudentsView(TeacherRequiredMixin, View):
-    def get(self, request):
-        teacher = get_object_or_404(Teacher, user=request.user)
-        students = teacher.students.all()
-        return render(request, 'teachers/students.html', {'students': students})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -19,7 +19,7 @@ class StudentLessonView(StudentRequiredMixin, View):
     def get(self, request, group_id):
         team = get_object_or_404(Team, id=group_id)
         lessons = team.lessons.all()
-        return render(request, 'students/lessons.html', {'lessons': lessons})
+        return render(request, 'students/guruh.html', {'lessons': lessons})
 
 
 class HomeworkView(StudentRequiredMixin, View):
